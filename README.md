@@ -27,8 +27,6 @@
 <img align="left" alt="pandas" width="40px" src="https://simpleicons.org/icons/pandas.svg"/>
 <img align="left" alt="json" width="40px" src="https://simpleicons.org/icons/json.svg"/>
 <img align="left" alt="googlemaps" width="40px" src="https://simpleicons.org/icons/googlemaps.svg"/>
-<img align="left" alt="googlemaps" width="40px" src="https://simpleicons.org/icons/googlemaps.svg"/>
-
 
 <br />
 <br />
