@@ -28,5 +28,12 @@ insert into chatbot (request, rule, response) values ('ㅋㅋㅋ',	'ㅋㅋㅋ',	
 insert into chatbot (request, rule, response) values ('서울 맛집 알려줘',	'서울|맛집',	'서울 맛집 입니다.');
 
 
+/* version 1.1 */ 
+## 추가 내용만 기재
+insert into chatbot (request, rule, response) values ('날씨', '날씨|알려', '날씨');
+insert into chatbot (request, rule, response) values ('맛집 알려줘', '맛집|알려', '맛집');
+insert into chatbot (request, rule, response) values ('미세먼지', '미세먼지|알려', 미세먼지);
+
+
 /* 추가 insert 구문 예비용 */
 insert into chatbot (request, rule, response) values ();
