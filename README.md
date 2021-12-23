@@ -8,6 +8,17 @@
 
 <br />
 
+
+### :microphone:Subject:
+- Simple data analysis using chatbot
+
+<br />
+
+### :key:Data source:
+
+
+<br />
+
 ### :wrench: Used  Languages and Tools:
 <img align="left" alt="Python" width="40px" src="https://simpleicons.org/icons/python.svg"/>
 <img align="left" alt="html5" width="40px" src="https://simpleicons.org/icons/html5.svg"/>
