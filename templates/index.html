@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="stylesheet" type="text/css" href="./static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+    </head>
+<body>
+    <h1>인공지능 채팅 봇 ! 무엇이든 물어봐</h1>
+    <div class="all">
+        <div class="left">
+            <div id="chatbox">
+            <p class="botText"><span>무엇이든 물어봐 천재 챗봇 입니다.</span></p>
+            </div>
+        
+            <div id="userInput">
+            <input id="textInput" type="text" name="msg" placeholder="Message">
+            <input id="buttonInput" type="submit" value="Send">
+            
+            </div>
+            
+            <script>
+            function homereload()
+            {
+                maps.location.reload();
+            }
+
+            function getBotResponse() {
+                var rawText = $("#textInput").val();
+                var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+                $("#textInput").val("");
+                $("#chatbox").append(userHtml);
+                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+                    
+                $.get("/get", { msg: rawText }).done(function(data) {
+                    var text_ans = data.split("|");
+                    var botHtml = '<p class="botText"><span>' + text_ans[0] + '</span></p>';
+                    $("#chatbox").append(botHtml);
+                    if(text_ans[1] != ""){
+                        var mapPath = "http://127.0.0.1:9005/"+text_ans[1];
+                        //$("#maps").val(mapPath);
+                        //$('#maps').attr('mapPath',mapPath); 
+                        //homereload()
+                        //document.getElementById('maps').contentDocument.location.reload(true);
+                        //var botMap = '<iframe name="if" src='+mapPath+' width="500" height="500"></iframe>';
+                        //$("#maps").append(botMap);
+                        alert("update");
+                        maps.location.href=mapPath; 
+                        
+                    }
+                    document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+                });
+            }
+    
+            $("#textInput").keypress(function(e) {
+                if(e.which == 13) {
+                getBotResponse();
+                }
+            });
+    
+            $("#buttonInput").click(function() {
+                getBotResponse();
+            })
+            </script>
+        </div>
+        <div class="right">
+            <iframe id="maps" name="maps" scr="http://127.0.0.1:9005/restaurant" width="500" height="500"></iframe>
+        </div>
+    </div>
+</body>
+</html>
