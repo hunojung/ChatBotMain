@@ -13,10 +13,10 @@
 ### :mag_right: Used Modules :nut_and_bolt:
 
 
-## :smile: Encore 16th :wink:
+### :smile: Encore 16th :wink:
 
 
-## :two_men_holding_hands: Group 01 :
+### :two_men_holding_hands: Group 01:
 - Jaekyun <a href="https://www.instagram.com/xi_kyun/?hl=ko">
     <img 
         src="http://img.shields.io/badge/-xi_kyun-black?style=flat&logo=Instagram&link=https://instagram.com/alpox.dev/"
