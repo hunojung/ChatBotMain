@@ -39,16 +39,7 @@
                     var botHtml = '<p class="botText"><span>' + text_ans[0] + '</span></p>';
                     $("#chatbox").append(botHtml);
                     if(text_ans[1] != ""){
-                        var mapPath = "http://127.0.0.1:9005/"+text_ans[1];
-                        //$("#maps").val(mapPath);
-                        //$('#maps').attr('mapPath',mapPath); 
-                        //homereload()
-                        //document.getElementById('maps').contentDocument.location.reload(true);
-                        //var botMap = '<iframe name="if" src='+mapPath+' width="500" height="500"></iframe>';
-                        //$("#maps").append(botMap);
                         alert("update");
-                        maps.location.href=mapPath; 
-                        
                     }
                     document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
                 });
@@ -64,9 +55,6 @@
                 getBotResponse();
             })
             </script>
-        </div>
-        <div class="right">
-            <iframe id="maps" name="maps" scr="http://127.0.0.1:9005/restaurant" width="500" height="500"></iframe>
         </div>
     </div>
 </body>

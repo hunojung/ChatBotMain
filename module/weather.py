@@ -32,8 +32,8 @@ def for_all_clawer(keyword):
     naver_weather_df = pd.merge(weather_df,position, how='left', right_index=True,left_index=True)
     
     # 지도 생성 + 답변 생성
-    res = '# 날씨 정보 입니다. #<br>';
-    maps = '';
+    res = '# 날씨 정보 입니다. #<br>'
+    maps = ''
     if '전국' in keyword:
         maps = folium.Map(location=[36.62675563, 127.4965159], zoom_start=7)
    
@@ -53,12 +53,11 @@ def for_all_clawer(keyword):
             res = res +( n +' : '+naver_weather_df['날씨'][n]+' 상태, '+
             '현재 온도 : '+naver_weather_df['기온'][n]+'℃<br />')
 
-    if type(maps) == folium.folium.Map :
-        maps.save('./templates/weather.html')
-    else : 
+    if type(maps) != folium.folium.Map :
         res = '날씨 확인할 지역을 제대로 입력해 주세요'
-        
-    return res
+        return res
+    else :
+        return maps._repr_html_()
 
 
 
@@ -86,8 +85,8 @@ def all_dust(keyword):
     
 
     # 지도 생성 + 답변 생성
-    res = '# 미세먼지 정보 입니다. #<br>';
-    maps = '';
+    res = '# 미세먼지 정보 입니다. #<br>'
+    maps = ''
     #지도에 마크 표시
     if '전국' in keyword:
         maps = folium.Map(location=[36.62675563, 127.4965159], tiles='cartodbpositron',zoom_start=7)
@@ -109,12 +108,12 @@ def all_dust(keyword):
             
             res = res + n + ' 미세먼지 : 오전 - '+dust_condition_last['오전예보'][n]+ ' / 오후 - '+dust_condition_last['오후예보'][n]+'.<br />'
     
-    if type(maps) == folium.folium.Map :
-        maps.save('./templates/dust.html')
-    else : 
+    if type(maps) != folium.folium.Map :
         res = '미세먼지 확인할 지역을 제대로 입력해 주세요'
-    
-    return res
+        return res
+    else :
+        return maps._repr_html_()
+
 
 
 

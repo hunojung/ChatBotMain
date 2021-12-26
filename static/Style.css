@@ -23,12 +23,13 @@ text-align: center;
 background-color: black;
 margin-left: auto;
 margin-right: auto;
-width: 100%;
+width: 40%;
+margin-top: 60px;
 }
 #userInput {
 margin-left: auto;
 margin-right: auto;
-width: 100%;
+width: 40%;
 margin-top: 60px;
 }
 #textInput {
@@ -42,22 +43,6 @@ font-size: 17px;
 padding: 3px;
 font-family: monospace;
 font-size: 17px;
-}
-.all{
-width: 100%;
-height: 650px;
-}
-.left{
-width: 49%;
-float: left;
-overflow: auto;
-box-sizing: border-box;
-}
-.right{
-width: 49%;
-float: right;
-overflow: auto;
-box-sizing: border-box;
 }
 .userText {
 color: white;

@@ -51,8 +51,8 @@ def getList(keyword):
         elif(restaurant_df['지역'][n] == '서울특별시'):
             restaurant_df['지역'][n] = '서울'
     
-    res = '# 맛집 정보 입니다. #<br>';
-    maps = '';
+    res = '# 맛집 정보 입니다. #<br>'
+    maps = ''
     for n in restaurant_df.index:
         if (( restaurant_df['지역'][n] in keyword ) or ( restaurant_df['도시명'][n] in keyword )) and type(maps) != folium.folium.Map:
             maps = folium.Map(location=[restaurant_df['lat'][n], restaurant_df['lng'][n]],zoom_start=10)
@@ -68,11 +68,9 @@ def getList(keyword):
                          '<b>상호명</b>: ' + restaurant_df['식당상호'][n])
             ).add_to(maps)
     
-    if type(maps) == folium.folium.Map :
-        maps.save('./templates/restaurant.html')
-    else : 
+    if type(maps) != folium.folium.Map :
         res = '맛집 확인할 지역을 제대로 입력해 주세요'
-    #지도를 템플릿에 삽입하기위해 iframe이 있는 문자열로 반환
-    
-    return res
+        return res
+    else :
+        return maps._repr_html_()
 ### ---  맛집 리스트 출력 코드 END --- ###

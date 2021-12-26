@@ -94,20 +94,14 @@ def chat(request):
             # rule : 서울|맛집 / response : 서울 맛집 입니다.
             if ( '맛집' in res ) :
                 res = rstr.getList(request)
-                if( '제대로' not in res):            
-                    kinds = 'restaurant'
             
             elif( '날씨' in res ) :
                 res = wd.for_all_clawer(request)
-                if( '제대로' not in res):
-                    kinds = 'weather'
             
             elif( '미세먼지' in res ):
                 res = wd.all_dust(request)
-                if( '제대로' not in res):
-                    kinds = 'dust'
             
-            return res, kinds
+            return res
         
     return '무슨 말인지 모르겠어요', ''
 ### chatbot 대답 END ###
@@ -124,8 +118,8 @@ def home():
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
-    ans , kinds= chat(userText)
-    return ans+'|'+kinds
+    ans = chat(userText)
+    return ans
 
 @app.route("/restaurant")
 def restaurant():
