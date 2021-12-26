@@ -68,7 +68,7 @@ def getList(keyword):
                          '<b>상호명</b>: ' + restaurant_df['식당상호'][n])
             ).add_to(maps)
     
-    if type(maps) != folium.folium.Map :
+    if type(maps) != folium.Map :
         res = '맛집 확인할 지역을 제대로 입력해 주세요'
         return res
     else :

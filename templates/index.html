@@ -36,11 +36,14 @@
                     
                 $.get("/get", { msg: rawText }).done(function(data) {
                     var text_ans = data.split("|");
-                    var botHtml = '<p class="botText"><span>' + text_ans[0] + '</span></p>';
-                    $("#chatbox").append(botHtml);
-                    if(text_ans[1] != ""){
-                        alert("update");
+                    if(text_ans[1] == ""){
+                        var botHtml = '<p class="botText"><span>' + text_ans[0] + '</span></p>';
+                        $("#chatbox").append(botHtml);
+                    }else{
+                        var botHtml =text_ans[0];
+                        $("#chatbox").append(botHtml);
                     }
+                    
                     document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
                 });
             }

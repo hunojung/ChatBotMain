@@ -25,6 +25,7 @@ import json
 import glob
 import sys
 import os
+import mpld3
 # from fbprophet import Prophet
 
 import warnings
@@ -119,7 +120,7 @@ class NaverDataLabOpenAPI():
             colList = self.df.columns[1:]
             n_col = len(colList)
     
-            fig = plt.figure(figsize=(12,6))
+            fig = plt.figure(figsize=(6,3), facecolor='white')
             plt.title('일 별 검색어 트렌드', size=20, weight='bold')
             for i in range(n_col):
                 sns.lineplot(x=self.df['날짜'], y=self.df[colList[i]], label=colList[i])
@@ -177,48 +178,51 @@ class NaverDataLabOpenAPI():
             
         return fig_list
 
-# 검색어 그룹 세트 정의
-keyword_group_set = {
-    'keyword_group_1': {'groupName': "삼겹살", 'keywords': ["삼겹살","돼지고기","삼겹살 맛집"]},
-    'keyword_group_2': {'groupName': "파전&막걸리", 'keywords': ["파전","막걸리","김치전","파전 맛집"]},
-    'keyword_group_3': {'groupName': "소고기", 'keywords': ["소고기","한우","소고기 맛집"]}
-    }
-#    'keyword_group_4': {'groupName': "테슬라", 'keywords': ["테슬라","Tesla","TSLA"]},
-#    'keyword_group_5': {'groupName': "페이스북", 'keywords': ["페이스북","Facebook","FB"]}
-# }
+def search_test() :
+        
+    # 검색어 그룹 세트 정의
+    keyword_group_set = {
+        'keyword_group_1': {'groupName': "삼겹살", 'keywords': ["삼겹살","돼지고기","삼겹살 맛집"]},
+        'keyword_group_2': {'groupName': "파전&막걸리", 'keywords': ["파전","막걸리","김치전","파전 맛집"]},
+        'keyword_group_3': {'groupName': "소고기", 'keywords': ["소고기","한우","소고기 맛집"]}
+        }
+    #    'keyword_group_4': {'groupName': "테슬라", 'keywords': ["테슬라","Tesla","TSLA"]},
+    #    'keyword_group_5': {'groupName': "페이스북", 'keywords': ["페이스북","Facebook","FB"]}
+    # }
 
-# API 인증 정보 설정
-client_id = "bK6SRZLZNMahPGDdtfC0"
-client_secret = "dfR3AdiO5w"
+    # API 인증 정보 설정
+    client_id = "bK6SRZLZNMahPGDdtfC0"
+    client_secret = "dfR3AdiO5w"
 
-# 요청 파라미터 설정
-startDate = "2020-01-01"
-endDate = "2020-12-31"
-timeUnit = 'date'
-device = ''
-ages = []
-gender = ''
+    # 요청 파라미터 설정
+    startDate = "2020-01-01"
+    endDate = "2020-12-31"
+    timeUnit = 'date'
+    device = ''
+    ages = []
+    gender = ''
 
-# 데이터 프레임 정의
-naver = NaverDataLabOpenAPI(client_id=client_id, client_secret=client_secret)
+    # 데이터 프레임 정의
+    naver = NaverDataLabOpenAPI(client_id=client_id, client_secret=client_secret)
 
-naver.add_keyword_groups(keyword_group_set['keyword_group_1'])
-naver.add_keyword_groups(keyword_group_set['keyword_group_2'])
-naver.add_keyword_groups(keyword_group_set['keyword_group_3'])
-# naver.add_keyword_groups(keyword_group_set['keyword_group_4'])
-# naver.add_keyword_groups(keyword_group_set['keyword_group_5'])
+    naver.add_keyword_groups(keyword_group_set['keyword_group_1'])
+    naver.add_keyword_groups(keyword_group_set['keyword_group_2'])
+    naver.add_keyword_groups(keyword_group_set['keyword_group_3'])
+    # naver.add_keyword_groups(keyword_group_set['keyword_group_4'])
+    # naver.add_keyword_groups(keyword_group_set['keyword_group_5'])
 
-df = naver.get_data(startDate, endDate, timeUnit, device, ages, gender)
+    df = naver.get_data(startDate, endDate, timeUnit, device, ages, gender)
 
 
-# 일 별 트렌드 시각화 하기
-fig_1 = naver.plot_daily_trend()
+    # 일 별 트렌드 시각화 하기
+    fig_1 = naver.plot_daily_trend()
+    print(mpld3.fig_to_html(fig_1))
+    return mpld3.fig_to_html(fig_1)
+    # 월 별 트렌드 시각화 하기
+    fig_2 = naver.plot_monthly_trend()
 
-# 월 별 트렌드 시각화 하기
-fig_2 = naver.plot_monthly_trend()
-
-# 트렌드 예측하기
-# fig_3 = naver.plot_pred_trend(days = 90)
+    # 트렌드 예측하기
+    # fig_3 = naver.plot_pred_trend(days = 90)
 
 
 

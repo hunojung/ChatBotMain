@@ -37,6 +37,7 @@ REQUEST / RULE / RESPONSE
 from flask import Flask, render_template, request
 from django.shortcuts import render
 from flask.helpers import send_file
+import folium
 from folium.folium import Map
 from pandas import Series, DataFrame
 
@@ -52,6 +53,7 @@ import flask
 # 전국 음식점 리스트 맵 만들기
 import module.restaurant as rstr
 import module.weather as wd
+import module.naver_test as nt
 
 ### 만들어놓은 모듈 불러오기 END ###
 
@@ -88,22 +90,25 @@ def chat(request):
                 break
             
         if chat_flag:
-            app.config['TEMPLATES_AUTO_RELOAD'] = True
             res = chatbot_data['response'][k]
-            kinds = ''
             # rule : 서울|맛집 / response : 서울 맛집 입니다.
             if ( '맛집' in res ) :
-                res = rstr.getList(request)
+                return rstr.getList(request)
             
             elif( '날씨' in res ) :
-                res = wd.for_all_clawer(request)
+                if( '전국' in request ) :
+                    return wd.for_all_clawer(request)
+                else :
+                    return wd.for_one_clawer(request)
             
             elif( '미세먼지' in res ):
-                res = wd.all_dust(request)
+                return wd.all_dust(request)
             
+            elif( '데이터' in res):
+                return nt.search_test()
             return res
         
-    return '무슨 말인지 모르겠어요', ''
+    return '무슨 말인지 모르겠어요'
 ### chatbot 대답 END ###
 
 
@@ -119,19 +124,15 @@ def home():
 def get_bot_response():
     userText = request.args.get('msg')
     ans = chat(userText)
-    return ans
+    if '<div' in ans[:10]:
+        ans='<div style="width:60%; height:100%"><div style="position:relative;width:100%;height:0;padding-bottom:100%;">'+ans[96:]
+        return ans+"|map"
+    elif '<style' in ans[:10]:
+        print("fig")
 
-@app.route("/restaurant")
-def restaurant():
-    return flask.send_file("./templates/restaurant.html")
-
-@app.route("/weather")
-def weather():
-    return flask.send_file("./templates/weather.html")
-    
-@app.route("/dust")
-def dust():
-    return flask.send_file("./templates/dust.html")
+        return ans+"|fig"
+    else    :
+        return ans
 
 if __name__ == "__main__":
     app.run(port=9005)
