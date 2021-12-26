@@ -36,14 +36,17 @@
                     
                 $.get("/get", { msg: rawText }).done(function(data) {
                     var text_ans = data.split("|");
-                    if(text_ans[1] == ""){
-                        var botHtml = '<p class="botText"><span>' + text_ans[0] + '</span></p>';
-                        $("#chatbox").append(botHtml);
-                    }else{
+                    if(text_ans[1] == "map"){
                         var botHtml =text_ans[0];
                         $("#chatbox").append(botHtml);
+                    }else if(text_ans[1] == "fig"){
+                        var botHtml =text_ans[0];
+                        $("#chatbox").append(botHtml);
+                    }else{
+                        var botHtml = '<p class="botText"><span>' + text_ans[0] + '</span></p>';
+                        $("#chatbox").append(botHtml);
                     }
-                    
+
                     document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
                 });
             }

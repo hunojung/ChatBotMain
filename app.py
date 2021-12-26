@@ -129,7 +129,7 @@ def get_bot_response():
         return ans+"|map"
     elif '<style' in ans[:10]:
         print("fig")
-
+        #ans = '<style>p { color: #26b72b; }</style>'
         return ans+"|fig"
     else    :
         return ans

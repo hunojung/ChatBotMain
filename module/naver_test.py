@@ -120,7 +120,7 @@ class NaverDataLabOpenAPI():
             colList = self.df.columns[1:]
             n_col = len(colList)
     
-            fig = plt.figure(figsize=(6,3), facecolor='white')
+            fig = plt.figure(figsize=(6,3), facecolor='#FA7268')
             plt.title('일 별 검색어 트렌드', size=20, weight='bold')
             for i in range(n_col):
                 sns.lineplot(x=self.df['날짜'], y=self.df[colList[i]], label=colList[i])
@@ -216,7 +216,7 @@ def search_test() :
 
     # 일 별 트렌드 시각화 하기
     fig_1 = naver.plot_daily_trend()
-    print(mpld3.fig_to_html(fig_1))
+    print(mpld3.fig_to_html(fig_1)[:500])
     return mpld3.fig_to_html(fig_1)
     # 월 별 트렌드 시각화 하기
     fig_2 = naver.plot_monthly_trend()
