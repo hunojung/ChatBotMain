@@ -15,6 +15,7 @@ from folium.features import DivIcon
 import matplotlib.pyplot as plt
 import platform
 from matplotlib import font_manager, rc
+from folium.features import DivIcon
 
 # 지역 날씨 크롤링
 def for_one_clawer(keyword):
@@ -178,6 +179,122 @@ def all_dust(keyword):
         return maps._repr_html_()
 
 
+
+
+
+def dust_last(keyword):
+    keyword_split = keyword.split()
+    url = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query="+keyword_split[0]+'미세먼지'
+    
+    try:
+        html_dust = requests.get(url).text
+        soup_dust = bs(html_dust, 'lxml')
+        
+        dust_city = soup_dust.select('span.cityname')
+        dust_value = soup_dust.select('span.value em')
+        
+        dust_city_table = [title.get_text() for title in dust_city]
+        dust_city_table_pd = pd.DataFrame(dust_city_table)
+        dust_value_table = [title.get_text() for title in dust_value]
+        dust_value_table_pd = pd.DataFrame(dust_value_table)
+        
+        merge_dust = pd.concat([dust_city_table_pd,dust_value_table_pd],axis=1)
+        
+        merge_dust.columns = ['위치','미세먼지']
+    except:
+        return '지역을 다시 확인해 주세요'
+    
+    
+     
+    '''
+    #구글 map으로 위도경도 따오기
+    gmaps_key = "AIzaSyC-ezB2J00Td105d4jqtdi2-JmZKuZ-5lY"
+    gmaps = googlemaps.Client(key=gmaps_key)
+
+
+    tasty_name = []
+
+    for num in range(len(merge_dust)):
+        if merge_dust['위치'][num]=='광주':
+            merge_dust['위치'][num]='경기도 광주'
+        if merge_dust['위치'][num]=='구리':
+            merge_dust['위치'][num]='경기도 구리'
+        tasty_name.append(merge_dust['위치'][num])
+
+    tasty_addreess = []
+    tasty_lat = []
+    tasty_lng = []
+
+    i = 0;
+    for name in tasty_name:
+        tmp = gmaps.geocode(name, language='ko')
+        tasty_addreess.append(tmp[0].get("formatted_address"))
+        
+        tmp_loc = tmp[0].get("geometry")
+
+        tasty_lat.append(tmp_loc['location']['lat'])
+        tasty_lng.append(tmp_loc['location']['lng'])
+        i= i+1
+        print(i,"번째 주소 가져오기 수행중")
+
+    merge_dust['lat'] = tasty_lat
+    merge_dust['lng'] = tasty_lng
+
+    # gmap에서 위도 경도 가져오기 END
+
+
+    
+    #경도위도 엑셀 파일 읽기
+    xlsx3 = pd.read_excel('./dust_city.xlsx')
+    
+    #합치기
+    merge_dust_last = pd.merge(merge_dust,xlsx3)
+
+    
+    
+    maps=''
+    for n in merge_dust_last.index:
+        if((merge_dust_last['위치'][n] in keyword) and (type(maps)!=folium.folium.Map)):
+            maps = folium.Map(location=[merge_dust_last['lat'][n], merge_dust_last['lng'][n]], tiles='cartodbpositron', zoom_start=9)
+        if(merge_dust_last['위치'][n] in keyword):
+            folium.Marker(
+                [merge_dust_last['lat'][n],merge_dust_last['lng'][n]],
+                radius=10,
+                color='#3186cc',
+                fill_color='#3186cc',
+                fill=True,
+                tooltip=merge_dust_last['위치'][n]).add_to(maps)
+        
+    ''' 
+    
+    dust_list=[]
+    res=''
+    for i in merge_dust.index:
+          if int(merge_dust.loc[i][1]) <= 30:
+              dust_list.append('좋음')
+          elif 30 < int(merge_dust.loc[i][1]) <= 80:
+              dust_list.append('보통')
+          elif 80 < int(merge_dust.loc[i][1]) <= 150:
+              dust_list.append('나쁨')
+          elif int(merge_dust.loc[i][1]) > 150:
+              dust_list.append('매우나쁨')
+              
+    merge_dust['수준']=dust_list
+    
+    for i in merge_dust.index:
+        if merge_dust.loc[i][0] in keyword:
+            if int(merge_dust.loc[i][1]) <= 30:
+                res = res + '현재 '+keyword+' 미세먼지는 '+'좋음['+merge_dust.loc[i][1]+'] 입니다.'
+            elif 30 < int(merge_dust.loc[i][1]) <= 80:
+                res = res + '현재 '+keyword+' 미세먼지는 '+'보통['+merge_dust.loc[i][1]+'] 입니다.'
+            elif 80 < int(merge_dust.loc[i][1]) <= 150:
+                res = res + '현재 '+keyword+' 미세먼지는 '+'나쁨['+merge_dust.loc[i][1]+'] 입니다.'
+            elif int(merge_dust.loc[i][1]) > 150:
+                res = res + '현재 '+keyword+' 미세먼지는 '+'매우나쁨['+merge_dust.loc[i][1]+'] 입니다.'
+    
+    if(res==''):
+        return merge_dust
+    return res
 
 
 
