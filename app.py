@@ -45,6 +45,7 @@ import pandas as pd
 import cx_Oracle
 import os
 import flask
+
 ### 모듈 import END ###
 
 
@@ -91,6 +92,7 @@ def chat(request):
             
         if chat_flag:
             res = chatbot_data['response'][k]
+
             # rule : 서울|맛집 / response : 서울 맛집 입니다.
             if ( '맛집' in res ) :
                 return rstr.getList(request)
@@ -100,10 +102,19 @@ def chat(request):
                     return wd.for_all_clawer(request)
                 else :
                     return wd.for_one_clawer(request)
+
             
-            elif( '미세먼지' in res ):
-                return wd.all_dust(request)
             
+            elif '미세먼지' in res:
+                
+                region = ['전국']
+                for word in region:   
+                    
+                    if word in request:
+                        return wd.all_dust(request)
+                return wd.dust_last(request)
+            
+
             elif( '데이터' in res):
                 return nt.search_test()
             return res

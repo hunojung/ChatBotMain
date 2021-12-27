@@ -67,7 +67,7 @@ def for_all_clawer(keyword):
     weather_df.set_index('지역',inplace=True)
 
     # 위도 경도 획득
-    position=pd.read_excel('./data/naver_data.xlsx')
+    position=pd.read_excel('C:/workspace_chatbot/ChatBotMain/data/naver_data.xlsx')
     position.set_index('지역',inplace=True)
     
     # 날씨 + 위도 경도
@@ -155,7 +155,7 @@ def all_dust(keyword):
     #지도에 마크 표시
     if '전국' in keyword:
         maps = folium.Map(location=[36.62675563, 127.4965159], tiles='cartodbpositron',zoom_start=7)
-
+        
     for n in dust_condition_last.index:
         if n in keyword:
             maps = folium.Map(location=[dust_condition_last['lat'][n], dust_condition_last['lng'][n]], tiles='cartodbpositron',zoom_start=12)
@@ -167,10 +167,17 @@ def all_dust(keyword):
                 color='#3186cc',
                 fill_color='#3186cc',
                 fill=True,
-                tooltip='<b>'+n+'</b> 미세 먼지 현황<br/>'+
-                '<b>오전</b> : '+dust_condition_last['오전예보'][n]+'<br/>'+
-                '<b>오후</b> : '+dust_condition_last['오후예보'][n]).add_to(maps)
-            
+                icon=DivIcon(
+                html='<div style="font-size: 1pt; strong; border:1px solid; border-radius : 10px; background-color: #FFFFF0; width:60px ;text-align:center">'+
+                    n+'<br/>'+
+                    '<b>오전</b> : '+dust_condition_last['오전예보'][n]+'<br/>'+
+                    '<b>오후</b> : '+dust_condition_last['오후예보'][n]+
+                    '</div>',)
+                #tooltip='<b>'+n+'</b> 미세 먼지 현황<br/>'+
+                #'<b>오전</b> : '+dust_condition_last['오전예보'][n]+'<br/>'+
+                #'<b>오후</b> : '+dust_condition_last['오후예보'][n]
+                ).add_to(maps)
+
             res = res + n + ' 미세먼지 : 오전 - '+dust_condition_last['오전예보'][n]+ ' / 오후 - '+dust_condition_last['오후예보'][n]+'.<br />'
     if type(maps) != folium.folium.Map :
         res = '미세먼지 확인할 지역을 제대로 입력해 주세요'
@@ -182,10 +189,27 @@ def all_dust(keyword):
 
 
 
+
 def dust_last(keyword):
+    # Plot 한글 지원
+    plt.rcParams['axes.unicode_minus'] = False
+    if platform.system() == 'Darwin':
+        rc('font', family='AppleGothic')
+    elif platform.system() == 'Windows':
+        path = "c:/Windows/Fonts/malgun.ttf"
+        font_name = font_manager.FontProperties(fname=path).get_name()
+        rc('font', family=font_name)
+    elif platform.system() == 'Linux':
+        path = "/usr/share/fonts/NanumGothic.ttf"
+        font_name = font_manager.FontProperties(fname=path).get_name()
+        plt.rc('font', family=font_name)
+    else:
+        print('Unknown system... sorry~~~~')
+
     keyword_split = keyword.split()
     url = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query="+keyword_split[0]+'미세먼지'
-    
+    # Plot 한글지원 END
+
     try:
         html_dust = requests.get(url).text
         soup_dust = bs(html_dust, 'lxml')
@@ -269,6 +293,7 @@ def dust_last(keyword):
     
     dust_list=[]
     res=''
+    res2=''
     for i in merge_dust.index:
           if int(merge_dust.loc[i][1]) <= 30:
               dust_list.append('좋음')
@@ -280,21 +305,31 @@ def dust_last(keyword):
               dust_list.append('매우나쁨')
               
     merge_dust['수준']=dust_list
-    
+
+    #출력 ex) 현재 순천 미세먼지는 좋음[14] 입니다.
+    for i in merge_dust.index:
+        if merge_dust.loc[i][0] in keyword_split[0]:
+            res = '현재 '+keyword_split[0]+' 미세먼지는 '+merge_dust.loc[i][2]+'['+merge_dust.loc[i][1]+'] 입니다.'
+        else:
+            res2 = res2+merge_dust.loc[i][0]+' 미세먼지는 '+merge_dust.loc[i][2]+'['+merge_dust.loc[i][1]+'] 입니다.'+'</br>'
+    '''       
     for i in merge_dust.index:
         if merge_dust.loc[i][0] in keyword:
             if int(merge_dust.loc[i][1]) <= 30:
-                res = res + '현재 '+keyword+' 미세먼지는 '+'좋음['+merge_dust.loc[i][1]+'] 입니다.'
+                res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'좋음['+merge_dust.loc[i][1]+'] 입니다.'
             elif 30 < int(merge_dust.loc[i][1]) <= 80:
-                res = res + '현재 '+keyword+' 미세먼지는 '+'보통['+merge_dust.loc[i][1]+'] 입니다.'
+                res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'보통['+merge_dust.loc[i][1]+'] 입니다.'
             elif 80 < int(merge_dust.loc[i][1]) <= 150:
-                res = res + '현재 '+keyword+' 미세먼지는 '+'나쁨['+merge_dust.loc[i][1]+'] 입니다.'
+                res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'나쁨['+merge_dust.loc[i][1]+'] 입니다.'
             elif int(merge_dust.loc[i][1]) > 150:
-                res = res + '현재 '+keyword+' 미세먼지는 '+'매우나쁨['+merge_dust.loc[i][1]+'] 입니다.'
+                res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'매우나쁨['+merge_dust.loc[i][1]+'] 입니다.'
+    '''
     
+
     if(res==''):
-        return merge_dust
+        return res2
     return res
+    
 
 
 
