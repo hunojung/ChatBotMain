@@ -141,7 +141,7 @@ def all_dust(keyword):
     dust_condition_pd.set_index('지역',inplace=True)
     
     # 위도 경도 획득
-    position=pd.read_excel('./data/naver_data.xlsx')
+    position=pd.read_excel('C:/workspace_chatbot/ChatBotMain/data/naver_data.xlsx')
     position.set_index('지역',inplace=True)
     
     # 미세먼지 + 위도 경도
