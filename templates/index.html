@@ -42,7 +42,14 @@
                     }else if(text_ans[1] == "fig"){
                         var botHtml =text_ans[0];
                         $("#chatbox").append(botHtml);
-                    }else{
+                    }
+                    
+                    else if(text_ans[1] == "other"){
+                        var botHtml = '<p>' + text_ans[0] + '</p>';
+                        $("#chatbox").append(botHtml);
+                    }
+                    
+                    else{
                         var botHtml = '<p class="botText"><span>' + text_ans[0] + '</span></p>';
                         $("#chatbox").append(botHtml);
                     }

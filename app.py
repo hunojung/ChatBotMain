@@ -142,6 +142,13 @@ def get_bot_response():
         print("fig")
         #ans = '<style>p { color: #26b72b; }</style>'
         return ans+"|fig"
+
+
+    elif '<texta' in ans[:10]:
+        
+        return ans+"|other"
+
+
     else    :
         return ans
 

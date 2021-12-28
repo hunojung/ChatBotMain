@@ -307,11 +307,13 @@ def dust_last(keyword):
     merge_dust['수준']=dust_list
 
     #출력 ex) 현재 순천 미세먼지는 좋음[14] 입니다.
+    res2 = keyword_split[0] +" 미세먼지 검색 결과 입니다.\r\n"
+    
     for i in merge_dust.index:
         if merge_dust.loc[i][0] in keyword_split[0]:
             res = '현재 '+keyword_split[0]+' 미세먼지는 '+merge_dust.loc[i][2]+'['+merge_dust.loc[i][1]+'] 입니다.'
         else:
-            res2 = res2+merge_dust.loc[i][0]+' 미세먼지는 '+merge_dust.loc[i][2]+'['+merge_dust.loc[i][1]+'] 입니다.'+'</br>'
+            res2 = res2+merge_dust.loc[i][0]+' 미세먼지는 '+merge_dust.loc[i][2]+'['+merge_dust.loc[i][1]+'] 입니다.\r\n​'
     '''       
     for i in merge_dust.index:
         if merge_dust.loc[i][0] in keyword:
@@ -324,10 +326,9 @@ def dust_last(keyword):
             elif int(merge_dust.loc[i][1]) > 150:
                 res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'매우나쁨['+merge_dust.loc[i][1]+'] 입니다.'
     '''
-    
-
+    res3 = '<textarea id="tascrolling" cols="35" rows="4" style="font-size: 17px;background-color: #EF5351;color: white;">'+res2+'</textarea>'
     if(res==''):
-        return res2
+        return res3
     return res
     
 
