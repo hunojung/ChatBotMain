@@ -168,10 +168,10 @@ def all_dust(keyword):
                 fill_color='#3186cc',
                 fill=True,
                 icon=DivIcon(
-                html='<div style="font-size: 1pt; strong; border:1px solid; border-radius : 10px; background-color: #FFFFF0; width:60px ;text-align:center">'+
-                    n+'<br/>'+
-                    '<b>오전</b> : '+dust_condition_last['오전예보'][n]+'<br/>'+
-                    '<b>오후</b> : '+dust_condition_last['오후예보'][n]+
+                html='<div style="font-size: 1pt; strong; border:1px solid; border-radius : 10px; background-color: #FFFFF0; width:75px">'+
+                    '<center>'+n+'</center>'+
+                    '<b>오전</b> : '+'<span style="text-align:center">'+dust_condition_last['오전예보'][n]+'</span><br/>'+
+                    '<b>오후</b> : '+'<span style="text-align:center">'+dust_condition_last['오후예보'][n]+'</span>'+
                     '</div>',)
                 #tooltip='<b>'+n+'</b> 미세 먼지 현황<br/>'+
                 #'<b>오전</b> : '+dust_condition_last['오전예보'][n]+'<br/>'+
