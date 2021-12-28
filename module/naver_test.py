@@ -178,11 +178,12 @@ class NaverDataLabOpenAPI():
             
         return fig_list
 
-def search_test() :
-        
+def search_test(keyword) :
+    keywordSplit=keyword.split()
+
     # 검색어 그룹 세트 정의
     keyword_group_set = {
-        'keyword_group_1': {'groupName': "삼겹살", 'keywords': ["삼겹살","돼지고기","삼겹살 맛집"]},
+        'keyword_group_1': {'groupName': keywordSplit[0], 'keywords': [keywordSplit[0]]},
         'keyword_group_2': {'groupName': "파전&막걸리", 'keywords': ["파전","막걸리","김치전","파전 맛집"]},
         'keyword_group_3': {'groupName': "소고기", 'keywords': ["소고기","한우","소고기 맛집"]}
         }
@@ -216,7 +217,7 @@ def search_test() :
 
     # 일 별 트렌드 시각화 하기
     fig_1 = naver.plot_daily_trend()
-    print(mpld3.fig_to_html(fig_1)[:500])
+    #print(mpld3.fig_to_html(fig_1)[15:100])
     return mpld3.fig_to_html(fig_1)
     # 월 별 트렌드 시각화 하기
     fig_2 = naver.plot_monthly_trend()

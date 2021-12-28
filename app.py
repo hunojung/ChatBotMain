@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# 현재 
 """
 Created on Sun Dec 19 11:58:34 2021
 
@@ -28,9 +29,9 @@ REQUEST / RULE / RESPONSE
 안녕	안녕	안녕하세요
 영화 추천해줘	영화|추천	아이언맨 시리즈와 어벤져스 시리즈를 보세요
 1조 멤버 알려줘	1조|멤버|알려	1조원은 강재균,이성찬,정훈오,김기환 입니다
-ㅋㅋㅋ	ㅋㅋㅋ	ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
 맛집 알려줘	맛집|알려	맛집
 날씨	날씨|알려	날씨
+네이버 트렌드   네이버|트렌드   데이터
 -----
 """
 ### 모듈 import ###
@@ -92,20 +93,24 @@ def chat(request):
         if chat_flag:
             res = chatbot_data['response'][k]
             # rule : 서울|맛집 / response : 서울 맛집 입니다.
-            if ( '맛집' in res ) :
+            if '맛집' in res  :
                 return rstr.getList(request)
             
-            elif( '날씨' in res ) :
-                if( '전국' in request ) :
+            elif '날씨' in res  :
+                if '전국' in request  :
                     return wd.for_all_clawer(request)
+                elif '년' in request and '월' in request and '일' in request :
+                    return wd.past_weather(request)
                 else :
                     return wd.for_one_clawer(request)
             
-            elif( '미세먼지' in res ):
-                return wd.all_dust(request)
-            
-            elif( '데이터' in res):
-                return nt.search_test()
+            elif '미세먼지' in res :
+                if '전국' in request :
+                    return wd.all_dust(request)
+                return wd.dust_last(request)
+
+            elif '데이터' in res :
+                return nt.search_test(request)
             return res
         
     return '무슨 말인지 모르겠어요'
@@ -128,8 +133,8 @@ def get_bot_response():
         ans='<div style="width:60%; height:100%"><div style="position:relative;width:100%;height:0;padding-bottom:100%;">'+ans[96:]
         return ans+"|map"
     elif '<style' in ans[:10]:
-        print("fig")
-        #ans = '<style>p { color: #26b72b; }</style>'
+        ans = '<style>svg { background-color: rgb(255, 240, 174) } tspan{ font-size : 7px }</style>' + ans[20:]
+        # print(ans[:100])
         return ans+"|fig"
     else    :
         return ans
