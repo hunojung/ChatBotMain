@@ -58,7 +58,7 @@ import module.naver_test as nt
 
 ### 만들어놓은 모듈 불러오기 END ###
 
-
+'''
 ### DB 연결 - 데이터 끌어오기 ###
 LOCATION = r"C:\instantclient_21_3"
 os.environ["PATH"] = LOCATION + ";" + os.environ["PATH"] #환경변수 등록
@@ -66,12 +66,14 @@ os.environ["PATH"] = LOCATION + ";" + os.environ["PATH"] #환경변수 등록
 connection = cx_Oracle.connect("scott", "tiger", "127.0.0.1:1521/xe")
 cursor = connection.cursor()
 
-chat_dic = {} # rule 저장 dict
 
 cursor.execute("SELECT * FROM chatbot")
 
 chatbot_data = DataFrame(cursor,columns=['request','rule','response'])
-# chatbot_data = pd.read_excel("./data/chatbot_data.xlsx")
+'''
+chatbot_data = pd.read_excel("./data/chatbot_data.xlsx")
+
+chat_dic = {} # rule 저장 dict
 row = 0
 for rule in chatbot_data['rule']:
     chat_dic[row] = rule.split('|')
@@ -109,7 +111,7 @@ def chat(request):
                     return wd.all_dust(request)
                 return wd.dust_last(request)
 
-            elif '데이터' in res :
+            elif '분석시작' in res :
                 return nt.search_test(request)
             return res
         
@@ -133,7 +135,7 @@ def get_bot_response():
         ans='<div style="width:60%; height:100%"><div style="position:relative;width:100%;height:0;padding-bottom:100%;">'+ans[96:]
         return ans+"|map"
     elif '<style' in ans[:10]:
-        ans = '<style>svg { background-color: rgb(255, 240, 174) } tspan{ font-size : 7px }</style>' + ans[20:]
+        ans = '<style>svg { background-color: #ededc2a1; } tspan{ font-size : 7px }</style>' + ans[20:]
         # print(ans[:100])
         return ans+"|fig"
     else    :

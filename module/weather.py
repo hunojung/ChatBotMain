@@ -38,7 +38,7 @@ def for_one_clawer(keyword):
 
 # 날씨 크롤링
 def for_all_clawer(keyword):
-
+    
      # Plot 한글 지원
     plt.rcParams['axes.unicode_minus'] = False
     if platform.system() == 'Darwin':
@@ -89,7 +89,7 @@ def for_all_clawer(keyword):
             fill=True,
             icon=DivIcon(
                 html=
-                    '<div style="font-size: 1pt; border-radius:10px; border:1px solid;  background-color: #ffffff; width:'+str(num)+'px ;text-align:center;">'+
+                    '<div style="font-size: 1pt; border-radius:10px; border:1px solid;  background-color: #fffffdd9; width:'+str(num)+'px ;text-align:center;">'+
                     '<center><b>'+n+'</b><br/>'+naver_weather_df['날씨'][n]+'<br>'+naver_weather_df['기온'][n]+'°C<br/>'+
                     '</div>'
             )
@@ -134,7 +134,7 @@ def past_weather(keyword):
         naver_weather_df=naver_weather
     except:
         return '년, 월, 일을 다시 확인해 주세요'
-        
+
     maps = folium.Map(location=[35.59517902558, 128.0103345404], zoom_start=6,tiles='cartodbpositron') 
 
     for n in naver_weather_df.index :
@@ -151,7 +151,7 @@ def past_weather(keyword):
             fill=True,
             icon=DivIcon(
                 html=
-                    '<div style="font-size: 1pt; border-radius:10px; border:1px solid;  background-color: #ffffff; width:'+str(num)+'px ;text-align:center;">'+
+                    '<div style="font-size: 1pt; border-radius:10px; border:1px solid;  background-color: #fffffdd9; width:'+str(num)+'px ;text-align:center;">'+
                     '<center><b>'+n+'</b><br/>'+weather[0]+'<br>'+temp[0]+'°C<br/>'+
                     '</div>'
             )).add_to(maps)
@@ -217,7 +217,7 @@ def all_dust(keyword):
             fill_color='#3186cc',
             fill=True,
             icon=DivIcon(
-            html=('<div style="font-size: 1pt; border:1px solid; border-radius : 10px; background-color: #FFFFF0; width:'+str(num)+'px ;">'+
+            html=('<div style="font-size: 1pt; border:1px solid; border-radius : 10px; background-color: #fffffdd9; width:'+str(num)+'px ;">'+
                 '<div style="text-align:center"><b>'+str(n)+'</b></div>'+
                 '<b>오전</b> : '+dust_condition_last['오전예보'][n]+'<br/>'+
                 '<b>오후</b> : '+dust_condition_last['오후예보'][n]+
