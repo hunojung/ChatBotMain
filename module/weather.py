@@ -154,7 +154,7 @@ def all_dust(keyword):
     maps = ''
     #지도에 마크 표시
     if '전국' in keyword:
-        maps = folium.Map(location=[36.62675563, 127.4965159], tiles='cartodbpositron',zoom_start=7)
+        maps = folium.Map(location=[35.59517902558, 128.0103345404], zoom_start=6,tiles='cartodbpositron')
         
     for n in dust_condition_last.index:
         if n in keyword:
