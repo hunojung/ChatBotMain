@@ -15,6 +15,8 @@ from folium.features import DivIcon
 import matplotlib.pyplot as plt
 import platform
 from matplotlib import font_manager, rc
+from flask import Flask, render_template, request
+import flask 
 
 # 지역 날씨 크롤링
 def for_one_clawer(keyword):
@@ -66,7 +68,7 @@ def for_all_clawer(keyword):
     weather_df.set_index('지역',inplace=True)
 
     # 위도 경도 획득
-    position=pd.read_excel('./data/naver_data.xlsx')
+    position=pd.read_excel('C:/workspace_chatob/ChatBotMain/data/naver_data.xlsx')
     position.set_index('지역',inplace=True)
     
     # 날씨 + 위도 경도
@@ -75,33 +77,39 @@ def for_all_clawer(keyword):
 
     # if '전국' in keyword:
     maps = folium.Map(location=[35.59517902558, 128.0103345404], zoom_start=6,tiles='cartodbpositron') 
-
     for n in naver_weather_df.index :
-        
-        # if '전국' in keyword :
-        folium.Marker(
-            [naver_weather_df['lat'][n],naver_weather_df['lng'][n]],
-            radius=10,
-            color='#3186cc',
-            fill_color='#3186cc',
-            fill=True,
-            icon=DivIcon(
-                html='<div style="font-size: 1pt; strong; border:1px solid;  background-color: #FFFFF0; width:40px ;text-align:center">'+
-                    n+'<br/>'+
-                    naver_weather_df['날씨'][n]+'<br/>'+
-                    naver_weather_df['기온'][n]+'°C<br/>'+
-                    '</div>',)
-
-            #tooltip=('<b>'+n+' 날씨<b> : '+naver_weather_df['날씨'][n]+' 상태.<br />'+
-            #'<b>현재 기온</b> : '+naver_weather_df['기온'][n])+'℃'
-            ).add_to(maps)
-        # elif n in keyword :
-        #     res = ('# 날씨 정보 입니다. #<br>'+ n +' : '+naver_weather_df['날씨'][n]+' 상태, '+
-        #     '현재 온도 : '+naver_weather_df['기온'][n]+'℃<br />')
-
-    # if type(maps) == folium.Map :
-    maps.save('test.html')
-    return maps._repr_html_()
+        if '눈' in naver_weather_df['날씨'][n] :
+            status = "눈.png"
+        elif '맑음' in naver_weather_df['날씨'][n] :
+            status = "sun.PNG"
+        elif '소나기' and '비' in naver_weather_df['날씨'][n] :
+            status = "비.png"
+        elif '흐림' in naver_weather_df['날씨'][n] :
+            status = "흐림.png"
+        elif '구름' in naver_weather_df['날씨'][n] :
+            status = "구름.png"
+        filename="C:/workspace_chatob/ChatBotMain/static/css/images/구름.png"
+        image_file = filename+status
+        if '전국' in keyword :
+            folium.Marker(
+                [naver_weather_df['lat'][n],naver_weather_df['lng'][n]],
+                radius=10,
+                color='#3186cc',
+                fill_color='#3186cc',
+                fill=True,  
+                icon=DivIcon(
+                html=
+                    '<div style="width:40px"><b>'+n+'</b></div>'+
+                    '<div style="font-size: 1pt; border-radius:5px; border:1px solid;  background-color: #ffffff; width:40px ;text-align:center;">'+
+                    # '<img src="{'+'{'+filename+'}'+'}">'+
+                    '<img src="C:/workspace_chatob/ChatBotMain/static/css/images/'+status+'" style="width: 20px; height: 20px;">'+
+                     naver_weather_df['기온'][n]+'°C<br/>'+
+                    '</div>'
+            )).add_to(maps)
+    maps.save('./test.html')
+    print('asdasd')
+    # return maps._repr_html_()
+    return flask.send_file('./test.html', maps._repr_html_())
 
         
 
@@ -141,7 +149,7 @@ def all_dust(keyword):
     dust_condition_pd.set_index('지역',inplace=True)
     
     # 위도 경도 획득
-    position=pd.read_excel('./data/naver_data.xlsx')
+    position=pd.read_excel('C:/workspace_chatob/ChatBotMain/data/naver_data.xlsx')
     position.set_index('지역',inplace=True)
     
     # 미세먼지 + 위도 경도
@@ -181,10 +189,70 @@ def all_dust(keyword):
 
 
 
+#-------------------before weather-------------------#
+
+'''
+from flask import Flask, render_template, request
+from bs4 import BeautifulSoup as bs
+import requests
+import pandas as pd
+from pandas import DataFrame as df
+import folium
+from folium.features import DivIcon
 
 
+naver_excel=pd.read_excel('./naver_data.xlsx')
+html = requests.get('https://search.naver.com/search.naver?query=2021년 12월 12일 날씨').text
+soup=bs(html,'lxml')
+before_data_area=soup.find('tbody').findAll('dt')
+before_data_weather=soup.find('tbody').findAll('p',class_='dsc')
+before_data_dgree=soup.find('tbody').findAll('p',class_='temp')
+
+before_data_area_text=[title.get_text().strip() for title in before_data_area]
+before_data_weather_text=[title.get_text().strip() for title in before_data_weather]
+before_data_dgree_text=[title.get_text().strip() for title in before_data_dgree]
+
+df_area=pd.DataFrame(before_data_area_text,columns=['지역'])
+df_weather=pd.DataFrame(before_data_weather_text,columns=['날씨'])
+df_dgree=pd.DataFrame(before_data_dgree_text,columns=['기온'])
+
+before_test= pd.merge(df_area,df_weather,left_index=True,right_index=True)
+before_test2=pd.merge(before_test,df_dgree,left_index=True,right_index=True)
+before_test2.set_index('지역',inplace=True)
 
 
+columns_list=['지역','lat','lng']
+naver_excel=pd.read_excel('./naver_data.xlsx')
+naver=pd.DataFrame(naver_excel,columns=columns_list)
+naver_weather = pd.merge(before_test2,naver,left_on='지역',right_on='지역')
+naver_weather.set_index('지역',inplace=True)
+
+
+map = folium.Map(location=[35.867175673645384, 128.12524978442053], zoom_start=7,
+                 tiles='Stamen Watercolor')
+for n in naver_weather.index:
+    if '눈' in naver_weather['날씨'][n] :
+        status = "눈.png"
+    else :
+        status = "해.png"
+    folium.Marker(
+        [naver_weather['lat'][n],naver_weather['lng'][n]],
+        radius=10,
+        color='#3186cc',
+        fill_color='#3186cc',
+        fill=True,
+        icon=DivIcon(
+            html=
+                 '<div style="width:40px"><b>'+n+'</b></div>'+
+                 '<div style="font-size: 1pt; border-radius:5px; border:1px solid;  background-color: #ffffff; width:40px ;text-align:center;">'+
+                 '<img src="C:/work_py/day10/img/'+status+'" style="width: 20px; height: 20px;">'+
+                 naver_weather['기온'][n]+'°C<br/>'+
+                 '</div>',
+        )).add_to(map)
+map.save('before_weather.html')
+
+
+'''
 
 
 

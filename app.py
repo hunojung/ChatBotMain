@@ -124,10 +124,10 @@ def home():
 def get_bot_response():
     userText = request.args.get('msg')
     ans = chat(userText)
-    if '<div' in ans[:10]:
-        ans='<div style="width:60%; height:100%"><div style="position:relative;width:100%;height:0;padding-bottom:100%;">'+ans[96:]
-        return ans+"|map"
-    elif '<style' in ans[:10]:
+    # if '<div' in ans[:10]:
+    #     ans='<div style="width:60%; height:100%"><div style="position:relative;width:100%;height:0;padding-bottom:100%;">'+ans[96:]
+    #     return ans+"|map"
+    if '<style' in ans[:10]:
         print("fig")
         #ans = '<style>p { color: #26b72b; }</style>'
         return ans+"|fig"
