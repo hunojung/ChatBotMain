@@ -189,7 +189,7 @@ def all_dust(keyword):
 
 
 
-#-------------------before weather-------------------#
+#------------------before weather------------------#
 
 '''
 from flask import Flask, render_template, request
