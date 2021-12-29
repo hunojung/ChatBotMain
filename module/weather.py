@@ -222,9 +222,7 @@ def all_dust(keyword):
                 '<b>오전</b> : '+dust_condition_last['오전예보'][n]+'<br/>'+
                 '<b>오후</b> : '+dust_condition_last['오후예보'][n]+
                 '</div>'),)).add_to(maps)
-        
         res = res + n + ' 미세먼지 : 오전 - '+dust_condition_last['오전예보'][n]+ ' / 오후 - '+dust_condition_last['오후예보'][n]+'.<br />'
-    
     return maps._repr_html_()
 
 
@@ -332,29 +330,21 @@ def dust_last(keyword):
               dust_list.append('나쁨')
           elif int(merge_dust.loc[i][1]) > 150:
               dust_list.append('매우나쁨')
-              
+        
     merge_dust['수준']=dust_list
 
     #출력 ex) 현재 순천 미세먼지는 좋음[14] 입니다.
     res2 = "<b>"+keyword_split[0] +" 미세먼지 검색 결과 입니다.</b>"
     
+    j = 0
     for i in merge_dust.index:
         if merge_dust.loc[i][0] in keyword_split[0]:
             res = '현재 '+keyword_split[0]+' 미세먼지는 '+merge_dust.loc[i][2]+'['+merge_dust.loc[i][1]+'] 입니다.'
         else:
+            if j == 3  :
+                res2 = res2+"|"
+            j=j+1
             res2 = res2+'</br>&nbsp'+merge_dust.loc[i][0]+' 미세먼지는 '+merge_dust.loc[i][2]+'['+merge_dust.loc[i][1]+'] 입니다.'
-    '''       
-    for i in merge_dust.index:
-        if merge_dust.loc[i][0] in keyword:
-            if int(merge_dust.loc[i][1]) <= 30:
-                res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'좋음['+merge_dust.loc[i][1]+'] 입니다.'
-            elif 30 < int(merge_dust.loc[i][1]) <= 80:
-                res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'보통['+merge_dust.loc[i][1]+'] 입니다.'
-            elif 80 < int(merge_dust.loc[i][1]) <= 150:
-                res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'나쁨['+merge_dust.loc[i][1]+'] 입니다.'
-            elif int(merge_dust.loc[i][1]) > 150:
-                res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'매우나쁨['+merge_dust.loc[i][1]+'] 입니다.'
-    '''
 
     if(res==''):
         return res2

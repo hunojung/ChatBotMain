@@ -126,7 +126,7 @@ app = Flask(__name__)
 def home():
     print("home")
     return render_template("index.html")
- 
+
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
@@ -138,6 +138,8 @@ def get_bot_response():
         ans = '<style>svg { background-color: #ededc2a1; } tspan{ font-size : 7px }</style>' + ans[20:]
         # print(ans[:100])
         return ans+"|fig"
+    elif "|" in ans :
+        return ans+"|text"
     else    :
         return ans
 

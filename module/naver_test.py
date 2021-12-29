@@ -227,16 +227,16 @@ def search_test(keyword) :
             # fig_3 = naver.plot_pred_trend(days = 90)
         else :
             # 데이터 프레임 정의
-            naver = NaverDataLabOpenAPI(client_id=client_id, client_secret=client_secret)
             naver.add_keyword_groups(keyword_group_set['keyword_group_2'])
             df2 = naver.get_data(startDate, endDate, timeUnit, device, ages, gender)
 
             for n in range(5):
-                df2[keywordSplit[1]][df[keywordSplit[1]].argmax()]=df[keywordSplit[1]][df[keywordSplit[1]].argmax()]/2
-            max_value=df2[keywordSplit[1]][df[keywordSplit[1]].argmax()]
+                df2[keywordSplit[0]][df[keywordSplit[0]].argmax()]=df2[keywordSplit[0]][df2[keywordSplit[0]].argmax()]/2
+                df2[keywordSplit[1]][df[keywordSplit[1]].argmax()]=df2[keywordSplit[1]][df2[keywordSplit[1]].argmax()]/2
+            max_value=df2[keywordSplit[1]][df2[keywordSplit[1]].argmax()]
             fig = plt.figure(figsize=(5,4), facecolor='#FA7268')
             plt.title(keywordSplit[0]+"과(와) "+keywordSplit[1], size=20, weight='bold')
-            x = df[keywordSplit[0]]
+            x = df2[keywordSplit[0]]
             y = df2[keywordSplit[1]]
 
             plt.scatter(x,y)
