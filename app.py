@@ -55,7 +55,7 @@ import flask
 import module.restaurant as rstr
 import module.weather as wd
 import module.naver_test as nt
-
+import module.search_movie as mv
 ### 만들어놓은 모듈 불러오기 END ###
 
 '''
@@ -113,6 +113,9 @@ def chat(request):
 
             elif '분석시작' in res :
                 return nt.search_test(request)
+            
+            elif '영화' in res:
+                return mv.search_movie(request)
             return res
         
     return '무슨 말인지 모르겠어요'
@@ -132,10 +135,10 @@ def get_bot_response():
     userText = request.args.get('msg')
     ans = chat(userText)
     if '<div' in ans[:10]:
-        ans='<div style="width:60%; height:100%"><div style="position:relative;width:100%;height:0;padding-bottom:100%;">'+ans[96:]
+        ans='<div style="width:60%;"><div style="position:relative;width:100%;height:0;padding-bottom:100%;">'+ans[96:]
         return ans+"|map"
     elif '<style' in ans[:10]:
-        ans = '<style>svg { background-color: #ededc2a1; } tspan{ font-size : 7px }</style>' + ans[20:]
+        ans = '<style>svg { background-color: #d4dadc; } tspan{ font-size : 7px }</style>' + ans[20:]
         # print(ans[:100])
         return ans+"|fig"
     elif "|" in ans :

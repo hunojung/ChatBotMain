@@ -135,7 +135,7 @@ def search_test(keyword) :
     try:
         keywordSplit=keyword.split()
         if keywordSplit[2] != '분석해줘':
-            return "분석 요청을 다시 해주세요"
+            return "분석 요청을 다시 해주세요ㅋ"
 
         # 검색어 그룹 세트 정의
         keyword_group_set = {
@@ -162,7 +162,7 @@ def search_test(keyword) :
         naver = NaverDataLabOpenAPI(client_id=client_id, client_secret=client_secret)
 
         naver.add_keyword_groups(keyword_group_set['keyword_group_1'])
-        naver.add_keyword_groups(keyword_group_set['keyword_group_2'])
+        
         # naver.add_keyword_groups(keyword_group_set['keyword_group_3'])
         # naver.add_keyword_groups(keyword_group_set['keyword_group_4'])
         # naver.add_keyword_groups(keyword_group_set['keyword_group_5'])
@@ -173,12 +173,12 @@ def search_test(keyword) :
         for n in range(5):
             df[keywordSplit[0]][df[keywordSplit[0]].argmax()]=df[keywordSplit[0]][df[keywordSplit[0]].argmax()]/2
 
-        max_value=df[keywordSplit[1]][df[keywordSplit[1]].argmax()]
+        
         ## pairplot
         if '날씨' in keyword :
             weather_df = pd.read_excel("./data/weather_final_data.xlsx",usecols=[1,2,3,4])
 
-            fig = plt.figure(figsize=(7,2.5), facecolor='#FA7268')
+            fig = plt.figure(figsize=(6,2.5), facecolor='#d4dadc')
             plt.subplot(1,3,1)
             plt.title('기온과 '+keywordSplit[0], size=10, weight='bold')
             x = weather_df['기온']
@@ -227,16 +227,16 @@ def search_test(keyword) :
             # fig_3 = naver.plot_pred_trend(days = 90)
         else :
             # 데이터 프레임 정의
+            naver = NaverDataLabOpenAPI(client_id=client_id, client_secret=client_secret)
             naver.add_keyword_groups(keyword_group_set['keyword_group_2'])
             df2 = naver.get_data(startDate, endDate, timeUnit, device, ages, gender)
 
             for n in range(5):
-                df2[keywordSplit[0]][df[keywordSplit[0]].argmax()]=df2[keywordSplit[0]][df2[keywordSplit[0]].argmax()]/2
-                df2[keywordSplit[1]][df[keywordSplit[1]].argmax()]=df2[keywordSplit[1]][df2[keywordSplit[1]].argmax()]/2
+                df2[keywordSplit[1]][df2[keywordSplit[1]].argmax()]=df2[keywordSplit[1]][df2[keywordSplit[1]].argmax()]/2
             max_value=df2[keywordSplit[1]][df2[keywordSplit[1]].argmax()]
-            fig = plt.figure(figsize=(5,4), facecolor='#FA7268')
+            fig = plt.figure(figsize=(5,4), facecolor='#d4dadc')
             plt.title(keywordSplit[0]+"과(와) "+keywordSplit[1], size=20, weight='bold')
-            x = df2[keywordSplit[0]]
+            x = df[keywordSplit[0]]
             y = df2[keywordSplit[1]]
 
             plt.scatter(x,y)
