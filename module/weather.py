@@ -326,7 +326,7 @@ def dust_last(keyword):
             elif int(merge_dust.loc[i][1]) > 150:
                 res = res + '현재 '+keyword_split[0]+' 미세먼지는 '+'매우나쁨['+merge_dust.loc[i][1]+'] 입니다.'
     '''
-    res3 = '<textarea id="tascrolling" cols="35" rows="4" style="font-size: 17px;background-color: #EF5351;color: white;">'+res2+'</textarea>'
+    res3 = '<textarea id="tascrolling" cols="40" rows="6" style="font-size: 17px;background-color: #EF5351;color: white;">'+res2+'</textarea>'
     if(res==''):
         return res3
     return res
