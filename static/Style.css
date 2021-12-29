@@ -17,8 +17,10 @@ body
 }
 h1
 {
-    background-color: #B2C7D9;
-    height: 10%;
+
+    background-color: #b1c0ce;
+height: 10%;
+
 color: black;
 margin-bottom: 0;
 margin-top: 0;
@@ -56,6 +58,9 @@ margin-top: 60px;
     justify-content: center;
 }
 #textInput {
+
+    padding-left: 20px;
+
     width: 100%;
     border: none;
     font-family: monospace;
@@ -74,9 +79,8 @@ margin-top: 60px;
     border-radius: 3px;
     height: 40px;
     background-color: #FFEC42;
-}
-.maps{
-    width: 300px;
+
+
 }
 .userText {
 color: black;
@@ -89,7 +93,9 @@ line-height: 30px;
 background-color: #FFEB33;
 padding: 10px;
 border-radius: 5px;
-box-shadow: 1px 1px 1px 1px gray;
+
+box-shadow: 1px 1px 1px gray;
+
 }
 .botText {
 color: black;
@@ -105,7 +111,9 @@ line-height: 30px;
 background-color: #ffffff;
 padding: 10px;
 border-radius: 5px;
-box-shadow: 1px 1px 1px 1px gray;
+
+box-shadow: 1px 1px 1px gray;
+
 }
 #tidbit {
 position:absolute;
@@ -114,12 +122,8 @@ right:0;
 width: 300px;
 }
 
-
 footer {
-   
-    
     bottom: 0;
-    
-    
+
     width: 100%;
 }
