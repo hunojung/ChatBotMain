@@ -31,7 +31,15 @@ def for_one_clawer(keyword):
         data_region=soup.find('h2',class_='title').text
         dust=soup.find('li',class_='item_today').text
 
-        return '<b>'+data_region+' 날씨</b>&nbsp<br />&nbsp'+data1+',&nbsp'+data2.split()[3]+',&nbsp'+data3+'&nbsp'+data4+',&nbsp'+dust
+        cloth = '<br />&nbsp기온이 영상이네요. 너무 두꺼운 옷은 더워요!'
+        if '-' in data1 :
+            cloth = '<br />&nbsp기온이 영하네요. 따뜻하게 중무장 하고 외출 하세요!'
+
+        rain = '<br />&nbsp강수확률이 없어요. 편하게 나가세요!'
+        if '0%' != data4 :
+            rain = '<br />&nbsp강수확률이 있어요. 우산 챙기세요!'
+        return ('<b>'+data_region+' 날씨</b>&nbsp<br />&nbsp'+data1+',&nbsp'+data2.split()[3]+',&nbsp'+data3+'&nbsp'+data4+',&nbsp'+dust+
+                cloth + rain)
     except :
         return '지역을 다시 입력 하세요' 
 

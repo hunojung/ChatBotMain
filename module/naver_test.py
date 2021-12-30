@@ -247,11 +247,11 @@ def search_test(keyword) :
             if tilt > 90 :
                 tilt=tilt-180
             if 80 > tilt > 10 :
-                anal3 = '미세먼지와 {0}는(은) 서로 비례 관계입니다.'.format(keywordSplit[0])
+                anal3 = '미세먼지와 {0}는(은) 서로 비례 관계로 보입니다.'.format(keywordSplit[0])
             elif -80 < tilt < -10 :
-                anal3 = '미세먼지와 {0}는(은) 서로 반비례 관계입니다.'.format(keywordSplit[0])
+                anal3 = '미세먼지와 {0}는(은) 서로 반비례 관계로 보입니다.'.format(keywordSplit[0])
             else :
-                anal3 = '미세먼지와 {0}는(은) 서로 다소 관계가 없어보입니다.'.format(keywordSplit[0])
+                anal3 = '미세먼지와 {0}는(은) 서로 다소 관계가 없어 보입니다.'.format(keywordSplit[0])
             #ans = ans+"추세선의 각도는 {0}˚ 입니다. {1}".format(tilt,anal)
 
             ans = anal+"<br />&nbsp"+anal2+"<br />&nbsp"+anal3
@@ -292,11 +292,11 @@ def search_test(keyword) :
                 tilt=tilt-180
 
             if 80 > tilt > 10 :
-                anal = '두 키워드는 서로 비례 관계입니다.'
+                anal = '두 키워드는 서로 비례 관계로 보입니다.'
             elif -80 < tilt < -10 :
-                anal = '두 키워드는 서로 반비례 관계입니다.'
+                anal = '두 키워드는 서로 반비례 관계로 보입니다.'
             else :
-                anal = '두 키워드는 서로 다소 관계가 없어보입니다.'
+                anal = '두 키워드는 서로 다소 관계가 없어 보입니다.'
 
             ans = "추세선의 각도는 {0}˚ 입니다.<br/>&nbsp{1}".format(tilt,anal)
 
