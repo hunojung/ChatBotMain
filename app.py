@@ -112,8 +112,9 @@ def chat(request):
                 return wd.dust_last(request)
 
             elif '분석시작' in res :
-                return nt.search_test(request)
-            
+                anal, anal2 = nt.search_test(request)
+                return anal+"|"+anal2
+                
             elif '영화' in res:
                 return mv.search_movie(request)
             return res

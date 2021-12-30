@@ -45,8 +45,10 @@
                         if(text_ans[1] == "map"){
                             var botHtml =text_ans[0];
                             $("#chatbox").append(botHtml);
-                        }else if(text_ans[1] == "fig"){
+                        }else if(text_ans[2] == "fig"){
                             var botHtml =text_ans[0];
+                            $("#chatbox").append(botHtml);
+                            var botHtml = '<p class="botText"><span>' + text_ans[1] + '</span></p>';
                             $("#chatbox").append(botHtml);
                         }
                         

@@ -11,7 +11,7 @@ pip install cython
 # anaconta prompt 에서 실행
 conda install Cython pystan pymc3 arviz
 """
-
+import math
 import pandas as pd
 import numpy as np
 
@@ -135,7 +135,7 @@ def search_test(keyword) :
     try:
         keywordSplit=keyword.split()
         if keywordSplit[2] != '분석해줘':
-            return "분석 요청을 다시 해주세요ㅋ"
+            return "분석 요청을 다시 해주세요~"
 
         # 검색어 그룹 세트 정의
         keyword_group_set = {
@@ -152,7 +152,7 @@ def search_test(keyword) :
 
         # 요청 파라미터 설정
         startDate = "2020-01-01"
-        endDate = "2020-12-31"
+        endDate = "2020-12-29"
         timeUnit = 'date'
         device = ''
         ages = []
@@ -169,12 +169,16 @@ def search_test(keyword) :
 
         df = naver.get_data(startDate, endDate, timeUnit, device, ages, gender)
 
+
+        if '2020년' in keyword :
+            fig = naver.plot_daily_trend()
+            days=str(df['날짜'][df[keywordSplit[0]].argmax()])[:10]
+            ans = "{0} 날에 최대 값이 발생했습니다.".format(days)
+            return mpld3.fig_to_html(fig),ans
+        ## pairplot
         # 최대 값 5개 없애기
         for n in range(5):
             df[keywordSplit[0]][df[keywordSplit[0]].argmax()]=df[keywordSplit[0]][df[keywordSplit[0]].argmax()]/2
-
-        
-        ## pairplot
         if '날씨' in keyword :
             weather_df = pd.read_excel("./data/weather_final_data.xlsx",usecols=[1,2,3,4])
 
@@ -191,6 +195,17 @@ def search_test(keyword) :
             plt.xlabel('기온')
             plt.ylabel(keywordSplit[0])
 
+            t=np.polyfit(x, y, 1) # 기울기와 절편 확인
+            tilt=round(math.atan(t[0])*180/math.pi)
+            if tilt > 90 :
+                tilt=tilt-180
+            if 80 > tilt > 10 :
+                anal = '기온과 {0}는(은) 서로 비례 관계로 보입니다.'.format(keywordSplit[0])
+            elif -80 < tilt < -10 :
+                anal = '기온과 {0}는(은) 서로 반비례 관계로 보입니다.'.format(keywordSplit[0])
+            else :
+                anal = '기온과 {0}는(은) 서로 다소 관계가 없어 보입니다.'.format(keywordSplit[0])
+            #ans = "추세선의 각도는 {0}˚ 입니다. {1}".format(tilt,anal)
 
             plt.subplot(1,3,2)
             plt.title('강수량과 '+keywordSplit[0], size=10, weight='bold')
@@ -202,6 +217,18 @@ def search_test(keyword) :
             p = np.poly1d(z)
             plt.plot(x,p(x),"r--")
             plt.xlabel('강수량')
+            
+            t=np.polyfit(x, y, 1) # 기울기와 절편 확인
+            tilt=round(math.atan(t[0])*180/math.pi)
+            if tilt > 90 :
+                tilt=tilt-180
+            if 80 >tilt > 10 :
+                anal2 = '강수량과 {0}는(은) 서로 비례 관계로 보입니다.'.format(keywordSplit[0])
+            elif -80 < tilt < -10 :
+                anal2 = '강수량과 {0}는(은) 서로 반비례 관계로 보입니다.'.format(keywordSplit[0])
+            else :
+                anal2 = '강수량과 {0}는(은) 서로 다소 관계가 없어 보입니다.'.format(keywordSplit[0])
+            #ans = ans+"추세선의 각도는 {0}˚ 입니다. {1}".format(tilt,anal)
 
             plt.subplot(1,3,3)
             plt.title('미세먼지와 '+keywordSplit[0], size=10)
@@ -215,11 +242,24 @@ def search_test(keyword) :
             plt.xlabel('미세먼지')
             plt.tight_layout()
             
+            t=np.polyfit(x, y, 1) # 기울기와 절편 확인
+            tilt=round(math.atan(t[0])*180/math.pi)
+            if tilt > 90 :
+                tilt=tilt-180
+            if 80 > tilt > 10 :
+                anal3 = '미세먼지와 {0}는(은) 서로 비례 관계입니다.'.format(keywordSplit[0])
+            elif -80 < tilt < -10 :
+                anal3 = '미세먼지와 {0}는(은) 서로 반비례 관계입니다.'.format(keywordSplit[0])
+            else :
+                anal3 = '미세먼지와 {0}는(은) 서로 다소 관계가 없어보입니다.'.format(keywordSplit[0])
+            #ans = ans+"추세선의 각도는 {0}˚ 입니다. {1}".format(tilt,anal)
+
+            ans = anal+"<br />&nbsp"+anal2+"<br />&nbsp"+anal3
             # 일 별 트렌드 시각화 하기
             #fig_1 = naver.plot_daily_trend()
             #print(mpld3.fig_to_html(fig_1)[15:100])
             
-            return mpld3.fig_to_html(fig)
+            return mpld3.fig_to_html(fig),ans
             # 월 별 트렌드 시각화 하기
             # fig_2 = naver.plot_monthly_trend()
 
@@ -246,7 +286,21 @@ def search_test(keyword) :
             plt.xlabel(keywordSplit[0])
             plt.ylabel(keywordSplit[1])
 
-            return mpld3.fig_to_html(fig)
+            t=np.polyfit(x, y, 1) # 기울기와 절편 확인
+            tilt=round(math.atan(t[0])*180/math.pi)
+            if tilt > 90 :
+                tilt=tilt-180
+
+            if 80 > tilt > 10 :
+                anal = '두 키워드는 서로 비례 관계입니다.'
+            elif -80 < tilt < -10 :
+                anal = '두 키워드는 서로 반비례 관계입니다.'
+            else :
+                anal = '두 키워드는 서로 다소 관계가 없어보입니다.'
+
+            ans = "추세선의 각도는 {0}˚ 입니다.<br/>&nbsp{1}".format(tilt,anal)
+
+            return mpld3.fig_to_html(fig),ans
     except:
         return "분석 요청을 다시 해주세요"
 
