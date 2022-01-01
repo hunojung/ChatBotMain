@@ -66,3 +66,21 @@
 ### :smile: Encore 16th :wink:
 -----------------------------
 
+![image](https://user-images.githubusercontent.com/78013523/147847480-d3193e04-534f-4c29-a63b-b8f9839bbbb4.png)
+![image](https://user-images.githubusercontent.com/78013523/147847482-a9edbadc-cfd9-462e-8dd1-4fcdf051d41c.png)
+![image](https://user-images.githubusercontent.com/78013523/147847485-4a8d5e85-7a11-407e-b725-3a61ae600054.png)
+![image](https://user-images.githubusercontent.com/78013523/147847486-fc17ce6e-51c6-41f5-9aea-30d17989fd82.png)
+![image](https://user-images.githubusercontent.com/78013523/147847487-67c89143-29f8-46ba-b345-d80d89e0654a.png)
+![image](https://user-images.githubusercontent.com/78013523/147847488-db39dbc1-b744-4015-8414-0a08032617bf.png)
+![image](https://user-images.githubusercontent.com/78013523/147847491-981f02d6-5e8e-411a-b048-7c372b643a0d.png)
+![image](https://user-images.githubusercontent.com/78013523/147847495-ab3e61c0-6e5d-43a3-bbe2-d6e3bfce31f8.png)
+![image](https://user-images.githubusercontent.com/78013523/147847497-d1aabd04-01b8-4f7d-ba20-2d1233c5cff7.png)
+![image](https://user-images.githubusercontent.com/78013523/147847508-69105550-0f0a-499f-9720-7abbd196dbef.png)
+![image](https://user-images.githubusercontent.com/78013523/147847511-9f17656b-e8ad-4afe-a615-9b410c0fa786.png)
+![image](https://user-images.githubusercontent.com/78013523/147847514-f5872b19-a959-4b89-b159-658e6f0345d4.png)
+![image](https://user-images.githubusercontent.com/78013523/147847516-98760310-0ea4-454a-b694-c116239d1c5b.png)
+![image](https://user-images.githubusercontent.com/78013523/147847518-aa4ce861-c8ce-4a3a-b426-e7e17d8ac177.png)
+![image](https://user-images.githubusercontent.com/78013523/147847519-4d6db61f-2f0d-475f-a95e-a49d201cd3a3.png)
+
+
+
