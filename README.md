@@ -65,5 +65,4 @@
 </a><br />
 ### :smile: Encore 16th :wink:
 -----------------------------
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?Encore-team01-chatBotProject/ChatBotMain=anuraghazra&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
 
